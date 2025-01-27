@@ -1,0 +1,82 @@
+
+.body{
+    padding-top: 2vw;
+    background-color: gainsboro;
+}
+.elem-menu > img {
+    width: 4vw;
+    border-radius: 5vw;
+    margin-right: 0.2vw;
+}
+.header {
+    padding: 1vw;
+    padding-left: 2vw;
+    padding-right: 2vw;
+    font-size: 1.1vw;
+}
+.menu {
+    display: grid;
+    grid-template-columns: 15% 10% 15% 10% 50%;
+    align-items: center;
+    justify-content: center;
+    background: white;
+}
+.atom-menu {
+    text-align: right;
+    font-size: 2vw;
+}
+.atom-menu > img {
+    border-radius: 0vw;
+    width: 10vw;
+}
+a {
+    color: black;
+}
+/* Админ панель */
+.admPanel {
+    margin-left: 2%;
+}
+.osnov{
+    margin-left: 2%;
+    display: grid;
+    grid-template-columns: 1.3fr 4fr 0fr;
+    gap: 20px;
+    height: 40vw;
+}
+.line{
+    text-decoration: underline;
+    margin-left: 0.5%;
+}
+.osnov>div{
+    background-color: white;
+    border-radius: 10px;
+}
+.glav{
+    padding: 2%;    
+}
+.users{
+    padding-left: 2%;
+    width: 100%;
+    padding: 1%;
+}
+.form{
+    width: 99%;
+    height: auto;
+    border-spacing: 0px;
+    margin-left: 0.5%;
+    text-align: center;
+    border-top: none;
+    border-left:none ;
+    border-right: none;
+    
+}
+.form td {
+    width: 10%;
+   border-right: solid #A8A8A8 1px;
+   border-bottom: solid #A8A8A8 1px;
+}
+.status-form {
+    background: none;
+    border: none;
+    text-decoration: underline;
+}

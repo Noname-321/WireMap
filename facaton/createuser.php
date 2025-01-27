@@ -44,22 +44,26 @@ $result=mysqli_fetch_assoc($result);
 <div class="content">
     <div class="elem-content">
         <div class="title-content">
-            Создать точку
+            Добавить пользователя
         </div>
         <div class="atom-content">
-<form action="homeAdmin.php" class="form-content" method="post">
-    Адрес<br/>
-    <input type="text" name='street' class="input-content"><br/><br/>
-    <a href="https://yandex.ru/maps/">Координаты<font color="grey">(Яндекс карты)</font><a><br/>
-    <input type="text" name='coordinates' class="input-content"><br/><br/>
-    Номер опоры<br/>
-    <input type="number" name='number' class="input-content"><br/><br/>
-    Оператор (ы)<br/>
-    <input type="text" name='operator' class="input-content"><br/><br/>
-    Макс. подвесов<br/>
-    <input type="number" name='max' class="input-content"><br/><br/>
-    Текущее кол-во подвесов<br/>
-    <input type="number" name='currnet' class="input-content"><br/><br/>
+<form action="AdminPanel.php" class="form-content" method="post">
+    Фамилия<br/>
+    <input type="text" name='surname' class="input-content"><br/><br/>
+    Имя<br/>
+    <input type="text" name='name' class="input-content"><br/><br/>
+    Логин<br/>
+    <input type="text" name='login' class="input-content"><br/><br/>
+    Пароль<br/>
+    <input type="password" name='password' class="input-content"><br/><br/>
+    Статус<br/>
+    <select name="status" id="">
+        <option>Admin</option>
+        <option>Provider</option>
+    </select>
+    <br/><br/>
+    Фото<font color=grey>(URL)</font><br/>
+    <input type="text" name='photo' class="input-content"><br/><br/>
     <input type="submit" value="Отмена" class="button button-one">
     <input type="submit" value="Отправить" class="button button-two">
 </form>

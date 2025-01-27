@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WireMap</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="style/create.css">
+    <link rel="stylesheet" href="style/createuser.css">
     <script src="https://api-maps.yandex.ru/2.1/?apikey=1b90df28-2bfc-4832-a2a9-d019caa8318a&lang=ru_RU" type="text/javascript"></script>
 </head>
 <body>
@@ -44,24 +44,24 @@ $result=mysqli_fetch_assoc($result);
 <div class="content">
     <div class="elem-content">
         <div class="title-content">
-            Создать точку
+            Редактировать маркер
         </div>
         <div class="atom-content">
 <form action="homeAdmin.php" class="form-content" method="post">
     Адрес<br/>
-    <input type="text" name='street' class="input-content"><br/><br/>
+    <input type="text" name='street1' class="input-content" value="<?php if (isset($_GET['mas'][1])){ echo ($_GET['mas'][1]);}else {echo 0;}?>"><br/><br/>
     <a href="https://yandex.ru/maps/">Координаты<font color="grey">(Яндекс карты)</font><a><br/>
-    <input type="text" name='coordinates' class="input-content"><br/><br/>
+    <input readonly type="text" name='coordinates1' class="input-content" value="<?php if (isset($_GET['mas'][0])){ echo ($_GET['mas'][0]);}else {echo 0;}?>"><br/><br/>
     Номер опоры<br/>
-    <input type="number" name='number' class="input-content"><br/><br/>
+    <input type="number" name='number1' class="input-content" value="<?php if (isset($_GET['mas'][2])){ echo ($_GET['mas'][2]);}else {echo 0;}?>"><br/><br/>
     Оператор (ы)<br/>
-    <input type="text" name='operator' class="input-content"><br/><br/>
+    <input type="text" name='operator1' class="input-content" value="<?php if (isset($_GET['mas'][3])){ echo ($_GET['mas'][3]);}else {echo 0;}?>"><br/><br/>
     Макс. подвесов<br/>
-    <input type="number" name='max' class="input-content"><br/><br/>
+    <input type="number" name='max1' class="input-content" value="<?php if (isset($_GET['mas'][4])){ echo ($_GET['mas'][4]);}else {echo 0;}?>"><br/><br/>
     Текущее кол-во подвесов<br/>
-    <input type="number" name='currnet' class="input-content"><br/><br/>
+    <input type="number" name='current1' class="input-content" value="<?php if (isset($_GET['mas'][5])){ echo ($_GET['mas'][5]);}else {echo 0;}?>"><br/><br/>
     <input type="submit" value="Отмена" class="button button-one">
-    <input type="submit" value="Отправить" class="button button-two">
+    <input type="submit" value="Обновить" class="button button-two">
 </form>
         </div>
         <div class="img-content">

@@ -38,10 +38,24 @@ if ($result){
         ?>
             <div class="header">
                 <div class="menu">
-                    <div class="elem-menu"><img src="images/<?php echo $result['photo'];?>" alt=""><?php echo $result['login']; ?></div>
+                    <div class="elem-menu"><img src="<?php echo $result['photo'];?>" alt=""><?php echo $result['login']; ?></div>
                     <div class="elem-menu"><a href="homeAdmin.php">Главная</a></div>
                     <div class="elem-menu"><a href="">Запросы на подключение</a></div>
-                    <div class="elem-menu"><a href="">Админ панель</a></div>
+                    <?php $query="SELECT * FROM LoginandPassword WHERE login='$login' AND password='$password'";
+                    $result=mysqli_query($db, $query);
+                    $result=mysqli_fetch_assoc($result);
+                    if ($result['Status']=='Admin') {
+                    ?>
+                    <div class="elem-menu"><a href="AdminPanel.php">Админ панель</a></div>
+                <?php 
+                    }
+                    else {
+                        ?>
+                            <div class="elem-menu"></div>
+                        <?php
+                    }
+                ?>
+                
                     <div class="elem-menu atom-menu"><img src="images/logo.png" alt=""></div>
                 </div>
             </div>
@@ -51,6 +65,7 @@ if ($result){
                 </div>
                 <?php
                     $koor=$_GET['coor'];
+
                     $query="SELECT * FROM coordinates WHERE coordinat='$koor'";
                     $result=mysqli_query($db, $query);
                     $result=mysqli_fetch_assoc($result);
@@ -60,10 +75,19 @@ if ($result){
                     <b>Информация о состоянии опоры:</b><br/>
                     <u>Статус: </u><?php 
                     if ($koor!='') {
-                    if ($result['max']==$result['current'])echo '<font color=orange>Достинут предел.</font>';
-                    else if ($result['max']<$result['current'])echo '<font color=red>Аварийное состояние.</font>';
-                    else echo '<font color=green>Опора в норме.</font>';
-                    }
+                        if ($result['max']==$result['current']) {
+                            $color='islands#orangeCircleIcon';
+                        echo '<font color=orange>Достинут предел.</font>';
+                        }
+                        else if ($result['max']<$result['current']) {
+                            $color='islands#redCircleIcon';
+                            echo '<font color=red>Аварийное состояние.</font>';
+                        }
+                        else {
+                            $color='islands#greenCircleIcon';
+                            echo '<font color=green>Опора в норме.</font>';
+                        }
+                        }
                     else {
                         echo "-";
                     }
@@ -90,15 +114,62 @@ if ($result){
                     $query="SELECT * FROM LoginandPassword WHERE login='$login' AND password='$password'";
                     $result=mysqli_query($db, $query);
                     $result=mysqli_fetch_assoc($result);
-                        if ($result['Status']=='admin') {
+                        if ($result['Status']=='Admin') {
                     ?>
                     <b>Управление метками:</b><br/>
                     <u><a href="create.php">Создать метку</a></u></br>
                     <?php 
-                    if ($koor!='') {
+                            // $coordinat = $_POST['coordinates1'];
+                            // $street = $_POST['street1'];
+                            // $number = $_POST['number1'];
+                            // $operator = $_POST['operator1'];
+                            // $max = $_POST['max1'];
+                            // $current = $_POST['current1'];
+                            // echo $koor;
+                            // $query="UPDATE coordinates SET street='$street', number='$number', operator='$operator', max='$max', current='$current'  WHERE coordinat='$koor'";
+                            // $result=mysqli_query($db, $query);
+                            
+                            $coordinat=$_POST['coordinates1'];
+                            if ($_POST['street1']!="") {
+                                $street=$_POST['street1'];
+                                $query="UPDATE coordinates SET street='$street' WHERE coordinat='$coordinat'";
+                                $result=mysqli_query($db, $query);
+                            }
+                            if ($_POST['operator1']!="") {
+                                $operator=$_POST['operator1'];
+                                $query="UPDATE coordinates SET operator='$operator' WHERE coordinat='$coordinat'";
+                                $result=mysqli_query($db, $query);
+                            }
+                            if ($_POST['number1']!="") {
+                                $number=$_POST['number1'];
+                                $query="UPDATE coordinates SET number='$number' WHERE coordinat='$coordinat'";
+                                $result=mysqli_query($db, $query);
+                            }
+                            if ($_POST['max1']!="") {
+                                $max=$_POST['max1'];
+                                $query="UPDATE coordinates SET max='$max' WHERE coordinat='$coordinat'";
+                                $result=mysqli_query($db, $query);
+                            }
+                            if ($_POST['current1']!="") {
+                                $current=$_POST['current1'];
+                                $query="UPDATE coordinates SET current='$current' WHERE coordinat='$coordinat'";
+                                $result=mysqli_query($db, $query);
+                            }
+                        
+                        
+
+                    $del=$_GET['del'];
+                    $query="DELETE FROM coordinates WHERE coordinat='$del'";
+                    mysqli_query($db, $query);
+
+                    $query="SELECT * FROM coordinates WHERE coordinat='$koor'";
+                    $result=mysqli_query($db, $query);
+                    $result=mysqli_fetch_assoc($result);
+                    if ($koor!='') {  
+                                          
                         ?> 
-                            <u><a href="">Редактировать информацию</a></u></br>
-                            <u><a href=""><font color=red>Удалить метку</font></a></u>
+                            <u><a href="editing.php?mas[0]=<?php echo $result['coordinat']; ?>&mas[1]=<?php echo ($result['street']); ?>&mas[2]=<?php echo ($result['number']); ?>&mas[3]=<?php echo ($result['operator']); ?>&mas[4]=<?php echo ($result['max']); ?>&mas[5]=<?php echo ($result['current']); ?>">Редактировать информацию</a></u></br>
+                            <u><a href="?del=<?php echo $koor?>"><font color=red>Удалить метку</font></a></u>
 
                         <?php
                     }
@@ -111,11 +182,41 @@ if ($result){
                     </div>
                 <?php
                         }
+                        else {
+                            ?>
+                              <div><img src="images/треугольник.png" alt="" class="img-elem"></div>
+                            <?php
+                        }
                 ?>
                 </div>
 
             </div>
+            <div class="footer">
+    <div class="header">
+                <div class="menu menu-footer">
+                    <div class="elem-menu elem-menu-footer"><a href="homeAdmin.php">Главная</a></div>
+                    <div class="elem-menu elem-menu-footer"><a href="">Личный кабинет</a></div>
+                    <div class="elem-menu elem-menu-footer"><a href="homeProvider.php">Запросы на подключение</a></div>
+                    <?php $query="SELECT * FROM LoginandPassword WHERE login='$login' AND password='$password'";
+                    $result=mysqli_query($db, $query);
+                    $result=mysqli_fetch_assoc($result);
+                    if ($result['Status']=='Admin') {
+                    ?>
+                    <div class="elem-menu elem-menu-footer"><a href="AdminPanel.php">Админ панель</a></div>
+                <?php 
+                    }
+                    else {
+                        ?>
+                            <div class="elem-menu"></div>
+                        <?php
+                    }
+                ?>
+                 
+                </div>
+    </div>
+</div>
         <?php
+        
     }
     else {
         echo "Не успешно";
@@ -123,25 +224,25 @@ if ($result){
             <a href="entry.php">Вернуться назад</a>
         <?php
     }
-
+    
     //карта
-    if (isset($_POST['name']) && !empty($_POST['name'])) {
-        $coordinat = mysqli_real_escape_string($db, $_POST['name']);
-        $query = "INSERT INTO coordinates (coordinat) VALUES ('$coordinat')";
+    if (!empty($_POST['coordinates']) && !empty($_POST['number']) && !empty($_POST['operator']) && !empty($_POST['max']) && !empty($_POST['currnet']) && !empty($_POST['street'])){
+        $coordinat = $_POST['coordinates'];
+        $street = $_POST['street'];
+        $number = $_POST['number'];
+        $operator = $_POST['operator'];
+        $max = $_POST['max'];
+        $current = $_POST['currnet'];
+        $query = "INSERT INTO coordinates (coordinat, street, number, operator, max, current) VALUES ('$coordinat', '$street', '$number', '$operator', '$max', '$current')";
         mysqli_query($db, $query);
+        ?>
+        <script>
+            alert("Успешно");
+        </script>
+        <?php
     }
+    
 ?>
-<div class="footer">
-<div class="header">
-                <div class="menu menu-footer">
-                    <div class="elem-menu elem-menu-footer"><a href="javascript:void(0);" onclick="window.location.reload();">Главная</a></div>
-                    <div class="elem-menu elem-menu-footer"><a href="">Личный кабинет</a></div>
-                    <div class="elem-menu elem-menu-footer"><a href="homeProvider.php">Запросы на подключение</a></div>
-                    <div class="elem-menu elem-menu-footer"><a href="">Админ панель</a></div>
-                 
-                </div>
-            </div>
-</div>
 <script>
         ymaps.ready(init);
 
@@ -163,7 +264,7 @@ if ($result){
             var myPlacemark = new ymaps.Placemark([<?php echo $row['coordinat']; ?>], {
                 balloonContent: coordinat + '<br><a href=\"?coor='+coordinat+'\">Перейти к файлу</a>' // Ссылка на файл
             }, {
-                preset: 'islands#greenCircleIcon' // Устанавливаем цвет метки
+                preset: 'islands#blueCircleIcon' // Устанавливаем цвет метки
             });
 
             // Добавляем метку на карту
